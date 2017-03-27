@@ -1,3 +1,0 @@
-class FruitExpense < Expense
-
-end

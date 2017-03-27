@@ -1,5 +1,5 @@
   class User < ApplicationRecord
-     has_many :lunch_details
+     has_many :expenses
      has_many :user_payment
      #has_one :daily_invoice
      validates_presence_of :name

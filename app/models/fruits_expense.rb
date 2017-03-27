@@ -1,0 +1,3 @@
+class FruitsExpense < Expense
+
+end

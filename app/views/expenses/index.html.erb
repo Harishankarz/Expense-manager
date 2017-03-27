@@ -1,38 +1,109 @@
-<h1>Expense Details</h1>
-<p>
-  <%= link_to 'Meal Register', new_meal_expense_path, :class => "btn btn-primary"%>
-</p>
-<table class="table table-bordered">
-  <thead>
-  <tr>
-    <th>Date</th>
-    <th>Name</th>
-    <th>Had Meal</th>
-    <th>Restaurant Name</th>
-    <th>Amount</th>
-    <th>Download/View</th>
-    <th>Action</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @expenses.each do |expense| %>
-      <% begin %>
-          <tr>
-            <td><%= expense.date.strftime("%b %e, %Y")%> </td>
-            <td><%= link_to "#{expense.user.name}", edit_expense_path(expense) %> </td>
-            <td><%= expense.had_lunch? ? 'Yes' : 'No' %></td>
-            <td><%= expense.daily_invoice.restaurant_name %></td>
-            <td><%= expense.daily_invoice.amount %></td>
-            <td><%= link_to "ViewBill", expense.daily_invoice.image.url, download: "ViewBill" %></td>
-            <td><%= link_to 'Edit', edit_meal_expense_path(expense.daily_invoice) %> |
-             <%= link_to 'Destroy', meal_expense_path(expense.daily_invoice),:method => :delete,:data => { :confirm => 'Are you sure?' } %></td>
-          </tr>
-      <% rescue Exception => e
-           puts "user doesnot exists"
-         end%>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <h1>Expense Details</h1>
+    <div class="panel-group">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            Filter
+            <div class="pull-right" data-toggle="collapse" data-target="#demo">
+              <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div>
+          </h4>
+        </div>
+        <div class="panel-body">
+          <div id="demo" class="collapse panel-collapse">
+            <%= form_tag(expenses_path, :method => "get", id: "search-form") do %>
+                <div class="col-xs-12">
+                  <label for="male">Names:</label>
+                  <% User.all.each do |c| %>
+                      <div class="checkbox-inline">
+                        <%= check_box_tag "user_ids[]", c.id %>
+                        <%= c.name %>
+                      </div>
+                  <% end %>
+                </div>
+                <div class="col-xs-12">
+                  <label for="type">Types:</label>
+                  <% Expense::EXPENSE_TYPES.each do |type| %>
+                      <div class="checkbox-inline">
+                        <%= check_box_tag "type_ids[]", type %>
+                        <%= type %>
+                      </div>
+                  <% end %>
+                </div>
+                <div class="col-sm-3 ">
+                  <label for="date">Date:</label>
+                  <input type="text" name="date" value="<%= params[:date] %>" class="date"/>
+                </div>
+                <div class="col-xs-12 form-group text-center">
+                  <%= submit_tag "Apply", name: nil, class: "btn btn-success btn-cons" %>
+                  <%= link_to 'Cancel', expenses_path, class: "btn btn-danger btn-cons" %>
+                </div>
+                </div>
+            <% end %>
+            </div>
+        </div>
+      </div>
+    <div class="panel-group">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="pull-left">
+            <%= link_to 'Add Expense', new_expense_path, :class => "btn btn-primary" %>
+          </div>
+          <div class="pull-right">
+            <%= form_tag(expenses_path, :method => "get", id: "search-form") do %>
+                <%= text_field_tag :search, params[:search], placeholder: "Search Expenses" %>
+                <%= submit_tag "Search", :name => nil %>
+            <% end %>
+          </div>
+          <div class="clearfix"></div>
+          <p></p>
 
-  <% end %>
-  </tbody>
-</table>
+              <table class="table table-bordered">
+                <% if @expenses.present? %>
+                <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Had Meal</th>
+                  <th>Restaurant Name</th>
+                  <th>Amount</th>
+                  <th>Type</th>
+                  <th>Download</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @expenses.each do |expense| %>
+                    <tr>
+                    <td><%= expense.date.strftime("%b %e, %Y") %> </td>
+                    <td><%= link_to "#{expense.user.name}", edit_expense_path(expense.daily_invoice) %> </td>
+                    <td><%= expense.had_lunch? ? 'Yes' : 'No' %></td>
+                    <td><%= expense.daily_invoice.restaurant_name %></td>
+                    <td><%= expense.daily_invoice.amount %></td>
+                    <td><%= expense.type %></td>
+                    <td><%= link_to "ViewBill", expense.daily_invoice.image.url, download: "ViewBill" %></td>
+                    <td><%= link_to 'Edit', edit_expense_path(expense.daily_invoice) %> |
+                      <%= link_to 'Destroy', expense_path(expense.daily_invoice), :method => :delete, :data => {:confirm => 'Are you sure?'} %></td>
+                    </tr>
+                <% end %>
+                <% else %>
+                    <p class="text-center"> No results found</p>
+                <% end %>
+                </tbody>
+              </table>
+
+          <div class="text-center"><%= will_paginate @expenses, renderer: BootstrapPagination::Rails %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $(".date").datepicker({dateFormat: "yy-mm-dd"});
+  });
+</script>
 
 

@@ -1,0 +1,3 @@
+class MealsExpense < Expense
+
+end

@@ -1,0 +1,13 @@
+<div class="panel panel-danger">
+  <div class="panel-heading">Expense Register</div>
+  <div class="panel-body">
+    <div class="row">
+      <!--Daily Invoices starts-->
+      <%= form_for @dailyinvoice, url: expenses_path do |f| %>
+          <% render partial: 'form', locals: {f: f} %>
+      <% end %>
+      <!--Daily Invoices ends-->
+    </div>
+  </div>
+</div>
+</div>

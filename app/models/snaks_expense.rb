@@ -1,0 +1,3 @@
+class SnaksExpense < Expense
+
+end

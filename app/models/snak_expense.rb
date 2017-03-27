@@ -1,3 +1,0 @@
-class SnakExpense < Expense
-
-end

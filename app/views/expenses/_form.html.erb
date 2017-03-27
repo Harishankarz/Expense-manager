@@ -1,0 +1,72 @@
+<% if @dailyinvoice.errors.any? %>
+    <div id="error_explaination">
+      <h2><%= pluralize(@dailyinvoice.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+        <% @dailyinvoice.errors.full_messages.each do |message| %>
+            <li><%= message %>
+            </li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
+
+<div class="col-sm-6">
+  <div class="form-group">
+    <%= f.label :Restaurant_Name %>
+    <%= f.text_field :restaurant_name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :Amount %>
+    <%= f.text_field :amount, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-sm-5">
+        <%= f.label :Date %>
+        <%= f.text_field :date, class: 'form-control date' %>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :Bill %>
+    <%= f.file_field :image, class: 'form-control', required: true%>
+  </div>
+</div>
+<!--Expense Details starts-->
+<%= f.fields_for :expense do |l| %>
+    <div class="col-sm-6">
+      <%= l.hidden_field :daily_invoice_id %>
+      <%= l.hidden_field :date %>
+      <div class="form-group">
+        <%= l.label :Users %></br>
+        <% User.all.each do |c| %>
+            <div class="checkbox-inline">
+              <%= check_box_tag "daily_invoice[expense][user_ids][]", c.id %>
+              <%= label_tag "daily_invoice[expense][user_ids][][#{c.id}]", c.name %>
+            </div>
+        <% end %>
+      </div>
+      <div class="form-group">
+        <%= l.label :Had_Lunch %>
+        <%= l.select :had_lunch, options_for_select({'Yes': '1', 'No':'0'}), {class: 'form-control', id: 'hadlunch'} %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-5">
+          <%= l.label :Type %>
+          <%= l.select :type, options_for_select({'Meals Expense': 'MealsExpense', 'Fruits Expense':'FruitsExpense', 'Snaks Expense':'SnaksExpense'}), {class: 'form-control', id: 'type'} %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group text-center">
+      <%= button_tag "Save", class: "btn btn-success btn-cons" %></button>
+      <%= link_to 'Cancel', expenses_path, class: "btn btn-danger btn-cons" %>
+    </div>
+<% end %>
+<!--Expense Details ends-->
+<script type="text/javascript">
+  $(document).ready(function () {
+    $(".date").datepicker({dateFormat: "yy-mm-dd"});
+  });
+</script>
