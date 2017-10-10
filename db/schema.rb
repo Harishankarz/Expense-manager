@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321065417) do
+ActiveRecord::Schema.define(version: 20170928140639) do
 
-  create_table "daily_invoices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "custom_expense_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_custom_expense_types_on_deleted_at", using: :btree
+  end
+
+  create_table "daily_invoices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "restaurant_name"
     t.date     "date"
     t.integer  "amount"
@@ -25,28 +33,31 @@ ActiveRecord::Schema.define(version: 20170321065417) do
     t.datetime "image_updated_at"
     t.integer  "lunch_detail_id"
     t.datetime "deleted_at"
+    t.boolean  "is_prepaid"
     t.index ["deleted_at"], name: "index_daily_invoices_on_deleted_at", using: :btree
   end
 
-  create_table "expenses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "expenses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date     "date"
     t.integer  "user_id"
     t.integer  "daily_invoice_id"
     t.boolean  "had_lunch"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "type"
     t.datetime "deleted_at"
+    t.integer  "custom_expense_type_id"
+    t.integer  "amount"
     t.index ["deleted_at"], name: "index_expenses_on_deleted_at", using: :btree
   end
 
-  create_table "payment_modes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "payment_modes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "payment_gateway"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
 
-  create_table "user_payments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "user_payments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.float    "amount_paid",     limit: 24
     t.string   "comment"
@@ -56,12 +67,15 @@ ActiveRecord::Schema.define(version: 20170321065417) do
     t.datetime "updated_at",                 null: false
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "email"
     t.integer  "cost_of_meal"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.boolean  "enable"
+    t.integer  "pending_amount"
+    t.boolean  "is_contributor"
   end
 
 end
