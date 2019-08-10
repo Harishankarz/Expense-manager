@@ -75,6 +75,8 @@ class DailyInvoicesController < ApplicationController
           @expense.custom_expense_type_id = params[:daily_invoice][:expense][:type]
         end
         @expense.user_id = user_id
+        user_obj = User.find(user_id)
+        user_obj.update(amount_to_be_paid: (user_obj.amount_to_be_paid+user_obj.cost_of_meal))
         @expense.save
       end
     end

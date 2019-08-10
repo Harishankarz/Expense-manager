@@ -5,12 +5,16 @@
       <%= form_for (@userpayment), html: {id: "user_payment_form"} do |f| %>
           <div class="form-group">
             <%= f.label :User, style: "margin-right: 15px;" %>
-            <%= f.select 'user_id', options_for_select(@users.collect {|u| [u.name, u.id]}), :class => 'form-control' %>
+            <% if(@selected_user && @amount_paid).present? %>
+                <%= f.select 'user_id', options_for_select(@users.collect {|u| [u.name, u.id]}, [@selected_user.name, @selected_user.id]), :class => 'form-control' %>
+            <% else %>
+                <%= f.select 'user_id', options_for_select(@users.collect {|u| [u.name, u.id]}), :class => 'form-control' %>
+            <% end %>
           </div>
           <div class="form-group">
             <div class="form-line">
             <%= f.label :Amount_paid %>
-            <%= f.text_field :amount_paid, :class => 'form-control required' %>
+            <%= f.text_field :amount_paid, value: @amount_paid, :class => 'form-control required' %>
             </div>
           </div>
           <div class="form-group">
@@ -27,9 +31,11 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-sm-3">
-
-                  <%= f.label :Date %>
-                  <%= f.text_field :date, :class => 'form-control required', :id => 'user_payment_date' %>
+                  <div class="demo-google-material-icon">
+                    <%= f.label :Date %>
+                    <span class="icon-name"><i class="material-icons", id="calendar_icon_id", style = "position: absolute; margin-top: -3px;">date_range</i></span>
+                    <%= f.text_field :date, :class => 'form-control required', :id => 'user_payment_date' %>
+                  </div>
                 </div>
               </div>
             </div>
@@ -43,6 +49,8 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#user_payment_date").datepicker({dateFormat: "yy-mm-dd"});
+        $('#calendar_icon_id').click(function(){
+            $("#user_payment_date").datepicker({dateFormat: "yy-mm-dd"}).focus();
+        });
     });
 </script>

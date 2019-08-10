@@ -11,9 +11,22 @@ class UserPaymentsController < ApplicationController
   # new
   #
   def new
-    @userpayment = UserPayment.new
-    @users = User.all
-    @paymentmodes = PaymentMode.all
+    if(params[:selected_user_id] && params[:amount_paid]).present?
+
+      @userpayment = UserPayment.new
+      @users = User.all
+      @paymentmodes = PaymentMode.all
+      @amount_paid = params[:amount_paid]
+      selected_user_id = params[:selected_user_id]
+      @selected_user = User.find(selected_user_id)
+
+    else
+
+      @userpayment = UserPayment.new
+      @users = User.all
+      @paymentmodes = PaymentMode.all
+
+    end
   end
 
   #

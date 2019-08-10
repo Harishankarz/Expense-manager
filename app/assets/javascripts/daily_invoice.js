@@ -1,11 +1,15 @@
 $(document).ready(function () {
 
 
-    $('#cal1').click(function(){
+    $('#calendar1').click(function(){
         $(".bill_date").datepicker({dateFormat: "yy-mm-dd"}).focus();
     });
-    $('#cal2').click(function(){
+    $('#calendar2').click(function(){
         $(".date").multiDatesPicker({dateFormat: "yy-mm-dd"}).focus();
+    });
+
+    $('#daily_invoice_is_prepaid').click(function(){
+        $("#bill_id").addClass("required");
     });
 
     custom_expense();
@@ -18,7 +22,7 @@ function custom_expense() {
 
         if($("#daily_invoice_expense_type").val() == "CustomExpense")
         {
-            $("#custom_expenses_link").trigger('click');
+            $("#custom_expense_modal_id").modal('show');
         }
 
     });

@@ -71,6 +71,29 @@ class UsersController < ApplicationController
     @total = @user.cost_of_meal*@expensedetails.count
   end
 
+
+  #
+  # meals_details
+  #
+  def meals_details
+    @users = User.all
+  end
+
+  def user_details
+    if(params[:month_no].present?)
+      @user = User.find(params[:id])
+      @selected_month_working_days = DailyInvoice.where('extract(month from date) = ?', params[:month_no]).count
+
+      @daily_invoices = DailyInvoice.where('extract(month from daily_invoices.date) = ?', params[:month_no]).distinct
+      @daily_invoices_count = @daily_invoices.joins(:expenses).where("expenses.had_lunch = ?", true).distinct.count
+    else
+      @user = User.find(params[:id])
+    end
+
+    respond_to do |format|
+      format.js
+    end
+  end
   #
   # destroy
   #

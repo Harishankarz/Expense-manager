@@ -17,6 +17,8 @@
      resources :daily_invoices
 
      match "previous_record" => "daily_invoices#previous_record", :as => :previous_record, :via => [:get]
+     match "user_details" => "users#user_details", :as => :user_details, :via => [:get, :post]
+     match "meals_details" => "users#meals_details", :as => :meals_details, :via => [:get, :post]
      match "daily_details" => "daily_invoices#daily_details", :as => :daily_details, :via => [:get, :post]
      match "/"=> "expense_manager#dashboard",:via => [:get, :post]
      match "user_month_details" => "users#user_month_details",  :via => [:get, :post]

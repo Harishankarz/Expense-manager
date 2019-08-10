@@ -1,0 +1,8 @@
+$("#amount_to_be_paid").val('<%= @user.amount_to_be_paid %>');
+
+$('#table_id').html("<%= j render(partial: 'users/user_details') %>")
+
+
+
+$("#new_user_payment_id").removeClass("btn btn-success btn-cons text-center");
+$('#new_user_payment_id').html("<%=j link_to 'Pay', new_user_payment_path(selected_user_id: @user.id, amount_paid: @user.amount_to_be_paid), method: :get, id: 'new_user_payment_id', class: 'btn btn-success btn-cons' %>");
