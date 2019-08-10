@@ -34,7 +34,7 @@
         <tr>
           <td><%= userpayment.user.name %></td>
           <td><%= userpayment.amount_paid %></td>
-          <td><%= (userpayment.user.pending_amount.to_i - userpayment.amount_paid.to_i) %></td>
+          <td><%= (userpayment.user.amount_to_be_paid.to_i - userpayment.amount_paid.to_i) %></td>
           <td><%= userpayment.payment_mode.payment_gateway %></td>
           <td><%= userpayment.date %></td>
           <td><%= userpayment.comment %></td>
