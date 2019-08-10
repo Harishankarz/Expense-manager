@@ -1,11 +1,11 @@
-# README
+# Expense Manager
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This Expense Manger track all our expenses.
+This app is agnostic to My SQL / 
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby Version 2.5.3
 
 * System dependencies
 
