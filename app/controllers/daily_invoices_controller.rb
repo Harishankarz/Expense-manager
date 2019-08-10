@@ -89,7 +89,6 @@ class DailyInvoicesController < ApplicationController
   # update
   #
   def update
-
     @daily_invoice = DailyInvoice.find(params[:id])
 
     date_array = params[:daily_invoice][:expense][:date].split(',')
@@ -100,7 +99,6 @@ class DailyInvoicesController < ApplicationController
     date_array.each do |date|
       
       user_ids.each do |user_id|
-
 
         @expense = Expense.new(daily_invoice_id: @daily_invoice.id, date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch])
 
