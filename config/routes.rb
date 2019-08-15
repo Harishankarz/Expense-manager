@@ -1,5 +1,20 @@
   Rails.application.routes.draw do
-  resources :custom_expense_types
+
+    devise_for :users,
+      controllers: { registrations: "registrations" }
+
+    devise_scope :user do
+      # Routes specified for Capybara poltergiest web driver
+      get "/users/password", to: "devise/passwords#new"
+
+      get "/signin", to: "devise/sessions#new"
+      get "/unauthorized", to: "devise/sessions#new"
+      get "/signup", to: "registrations#new"
+      delete "/signout", to: "devise/sessions#destroy"
+      get "/signout", to: "devise/sessions#destroy"
+    end
+
+    resources :custom_expense_types
      root "daily_invoices#index"
      resources :users
      resources :expenses do

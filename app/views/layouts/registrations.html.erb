@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= csrf_meta_tags %>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <title>Expense Manager</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+  <%= stylesheet_link_tag "excluded/custom", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+  <script src="//cdn.optimizely.com/js/2226980328.js"></script>
+</head>
+<body class="theme-red <%= controller_name %>">
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+  <div class="loader">
+    <div class="preloader">
+      <div class="spinner-layer pl-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+    <p>Please wait...</p>
+  </div>
+</div>
+<!-- #END# Page Loader -->
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+<!-- #END# Overlay For Sidebars -->
+<!-- Search Bar -->
+
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="main-w3layouts wrapper">
+        <div class="main-agileinfo">
+          <div class="agileits-top">
+            <div class="txt-center">
+            <% if notice %>
+                <div class="alert alert-success alert-dismissable">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <%= notice %>
+                </div>
+            <% end %>
+            <% if alert %>
+              <div class="alert alert-danger  alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <%= alert %>
+              </div>
+            <% end %>
+            </div>
+            <%= yield %>
+          </div>
+        </div>
+        <!-- copyright -->
+        <div class="colorlibcopy-agile">
+          <p>© 2019 Expense Tracker. All rights reserved</p>
+        </div>
+        <!-- //copyright  animations below are hidden for now-->
+        <ul class="colorlib-bubbles hidden">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+
+
+      <div id="modal-container" class="modal fade" role="dialog"></div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
+
+
+

@@ -15,6 +15,7 @@ group :development, :test do
 end
 
 gem "pry-rails"
+gem 'devise'
 
 gem 'mysql2'
 # gem 'bootstrap'
